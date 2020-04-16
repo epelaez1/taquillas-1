@@ -39,6 +39,8 @@ function rentals(state = [], action = {}) {
 
 function locations(state = [], action = {}) {
 	switch (action.type) {
+	case 'SET_LOCATIONS':
+		return action.payload.locations;
 	default:
 		return state;
 	}
@@ -78,6 +80,20 @@ function paymentMethods(state = [], action = {}) {
 		return state;
 	}
 }
+function info(state = [], action = {}) {
+	const models = {
+		locations: {
+			columns: [{ key: 'name', name: 'Nombre' }, { key: 'description', name: 'Descripción' }],
+			title: 'Localizaciones',
+		},
+	};
+	switch (action.type) {
+	case 'DELETE_INFO':
+		return state;
+	default:
+		return models;
+	}
+}
 
 const GlobalState = (combineReducers({
 	pong,
@@ -91,6 +107,7 @@ const GlobalState = (combineReducers({
 	lockerStates,
 	rentalStates,
 	paymentMethods,
+	info,
 }));
 
 export default GlobalState;
