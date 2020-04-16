@@ -9,8 +9,8 @@ export function removeLocations(locations) {
 	return { type: 'REMOVE_LOCATIONS', payload: { locations } };
 }
 
-export function removeLocation(locations) {
-	return { type: 'REMOVE_LOCATIONS', payload: { locations } };
+export function removeLocation(location) {
+	return { type: 'REMOVE_LOCATIONS', payload: { location } };
 }
 
 export function updateLocations(locations) {
@@ -18,5 +18,5 @@ export function updateLocations(locations) {
 }
 
 export function updateLocation(location) {
-	return { type: 'UPDATE_LOCATIONS', payload: { location } };
+	return { type: 'UPDATE_LOCATION', payload: { location } };
 }

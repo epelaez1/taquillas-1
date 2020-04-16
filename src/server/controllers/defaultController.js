@@ -27,6 +27,7 @@ exports.show = (req, res) => {
 };
 
 exports.update = (req, res, next) => {
+	console.log(req.body);
 	const { entity, body } = req;
 	const fields = [];
 
@@ -37,12 +38,14 @@ exports.update = (req, res, next) => {
 		}
 	});
 	// Check if there is at least one field to update
+	console.log(fields);
 	if (!fields) {
 		throw new BadRequestError();
 	}
 
 	entity.save({ fields })
 		.then((newEntity) => {
+			console.log(newEntity);
 			res.json(newEntity);
 		})
 		.catch((error) => next(error));
