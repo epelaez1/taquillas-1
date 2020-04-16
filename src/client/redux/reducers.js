@@ -39,6 +39,11 @@ function rentals(state = [], action = {}) {
 
 function locations(state = [], action = {}) {
 	switch (action.type) {
+	case 'UPDATE_LOCATION':
+		return state.map((location) => (
+			location.id === action.payload.location.id ? action.payload.location : location));
+	case 'SET_LOCATION':
+		return [...state, action.payload.location];
 	case 'SET_LOCATIONS':
 		return action.payload.locations;
 	default:
@@ -83,7 +88,22 @@ function paymentMethods(state = [], action = {}) {
 function info(state = [], action = {}) {
 	const models = {
 		locations: {
-			columns: [{ key: 'name', name: 'Nombre' }, { key: 'description', name: 'Descripción' }],
+			id: 'id',
+			columns: [
+				{
+					field: 'id',
+					title: 'ID',
+					editable: 'never',
+				},
+				{
+					field: 'name',
+					title: 'Nombre',
+				},
+				{
+					field: 'description',
+					title: 'Descripción',
+				},
+			],
 			title: 'Localizaciones',
 		},
 	};

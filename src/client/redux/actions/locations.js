@@ -1,4 +1,6 @@
-
+export function setLocation(location) {
+	return { type: 'SET_LOCATION', payload: { location } };
+}
 export function setLocations(locations) {
 	return { type: 'SET_LOCATIONS', payload: { locations } };
 }
