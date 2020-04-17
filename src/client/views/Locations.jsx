@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {
 	fetchGet, fetchPost,
 	fetchDelete, fetchPut,
@@ -8,8 +9,8 @@ import {
 	setLocation, setLocations,
 	updateLocation, removeLocation,
 } from '../redux/actions/locations';
-import EditableTable from './Locations2';
-
+import EditableTable from '../components/EditableTable';
+import Layout from '../components/Layout';
 
 const Locations = () => {
 	const dispatch = useDispatch();
@@ -41,15 +42,15 @@ const Locations = () => {
 			.then((r) => r.json())
 			.then((locations) => dispatch(setLocations(locations)));
 	});
+
 	return (
-		<div>
-			<EditableTable
-				model="locations"
-				create={create}
-				update={update}
-				remove={remove}
-			/>
-		</div>
+		<EditableTable
+			model="locations"
+			create={create}
+			update={update}
+			remove={remove}
+		/>
+
 	);
 };
 

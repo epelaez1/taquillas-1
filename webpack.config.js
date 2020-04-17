@@ -51,9 +51,9 @@ module.exports = {
 	devServer: {
 		port: 3000,
 		proxy: {
-			'/api': 'http://localhost:8080',
+			'/api': 'http://localhost:5000',
 			// Cheap trick for grabbing only /login, not /login*
-			'/login': 'http://localhost:8080',
+			'/login': 'http://localhost:5000',
 		},
 		// Required by the dev server to work with react-router.
 		historyApiFallback: true,

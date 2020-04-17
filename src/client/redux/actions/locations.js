@@ -10,7 +10,7 @@ export function removeLocations(locations) {
 }
 
 export function removeLocation(location) {
-	return { type: 'REMOVE_LOCATIONS', payload: { location } };
+	return { type: 'REMOVE_LOCATION', payload: { location } };
 }
 
 export function updateLocations(locations) {

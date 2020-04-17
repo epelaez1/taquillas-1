@@ -11,8 +11,10 @@ function pong(state = false, action = {}) {
 
 function loggedUser(state = {}, action = {}) {
 	switch (action.type) {
+	case 'MAKE_ADMIN':
+		return { isAdmin: !state.isAdmin, name: 'E. Peláez' };
 	default:
-		return state;
+		return { isAdmin: false, name: 'E. Peláez' };
 	}
 }
 
@@ -46,6 +48,8 @@ function locations(state = [], action = {}) {
 		return [...state, action.payload.location];
 	case 'SET_LOCATIONS':
 		return action.payload.locations;
+	case 'REMOVE_LOCATION':
+		return state.filter((location) => location.id !== action.payload.location.id);
 	default:
 		return state;
 	}
@@ -94,10 +98,12 @@ function info(state = [], action = {}) {
 					field: 'id',
 					title: 'ID',
 					editable: 'never',
+					width: 1,
 				},
 				{
 					field: 'name',
 					title: 'Nombre',
+					width: 200,
 				},
 				{
 					field: 'description',

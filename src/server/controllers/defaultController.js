@@ -54,7 +54,7 @@ exports.update = (req, res, next) => {
 exports.destroy = (req, res, next) => {
 	req.entity.destroy()
 		.then(() => {
-			req.json({ status: 'OK' });
+			res.json({ status: 'OK' });
 		})
 		.catch((error) => next(error));
 };
