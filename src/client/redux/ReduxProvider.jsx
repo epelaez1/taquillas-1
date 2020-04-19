@@ -6,6 +6,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import GlobalState from './reducers';
 import TestView from '../views/TestView';
 import Locations from '../views/Locations';
+import Lockers from '../views/Lockers';
 import ErrorView from '../views/ErrorView';
 import Layout from '../components/Layout';
 import SignIn from '../components/SignIn';
@@ -17,7 +18,7 @@ export default class ReduxProvider extends React.Component {
 		super(props);
 		this.initialState = {
 			pong: false,
-			loggedUser: {},
+			loggedUser: { isAdmin: true, name: 'Usuario' },
 			lockers: [],
 			users: [],
 			rentals: [],
@@ -64,6 +65,7 @@ export default class ReduxProvider extends React.Component {
 								<Route exact path="/" component={TestView} />
 								<Route exact path="/signin" component={SignIn} />
 								<Route exact path="/admin/locations" component={Locations} />
+								<Route exact path="/admin/lockers" component={Lockers} />
 								<Route path="/500" render={(props) => <ErrorView {...props} code={500} />} />
 								<Route render={(props) => <ErrorView {...props} code={404} />} />
 							</Switch>

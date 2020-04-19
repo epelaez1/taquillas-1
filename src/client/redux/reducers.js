@@ -1,5 +1,88 @@
 import { combineReducers } from 'redux';
+import { LockerStates } from '../../server/constants';
 
+const models = {
+	locations: {
+		id: 'id',
+		columns: [
+			{
+				field: 'id',
+				title: 'ID',
+				editable: 'never',
+				width: 100,
+			},
+			{
+				field: 'name',
+				title: 'Nombre',
+				width: 200,
+			},
+			{
+				field: 'description',
+				title: 'Descripción',
+				cellStyle: {
+					textOverflow: 'ellipsis',
+					whiteSpace: 'nowrap',
+					overflow: 'hidden',
+					maxWidth: 100,
+				},
+			},
+			{
+				field: 'createdAt',
+				title: 'Fecha de Creación',
+				type: 'date',
+				editable: 'never',
+			},
+			{
+				field: 'updatedAt',
+				title: 'Última modificación',
+				type: 'date',
+				editable: 'never',
+			},
+		],
+		title: 'Localizaciones',
+	},
+	lockers: {
+		id: 'id',
+		columns: [
+			{
+				field: 'lockerNumber',
+				title: 'Nº',
+				type: 'numeric',
+				width: 100,
+			},
+			{
+				field: 'locationId',
+				title: 'Localización',
+				width: 200,
+				lookup: {},
+			},
+			{
+				field: 'lockerStateId',
+				title: 'Estado',
+				width: 200,
+				lookup: {
+					[LockerStates.UNAVAILABLE]: 'No Disponible',
+					[LockerStates.AVAILABLE]: 'Disponible',
+					[LockerStates.RESERVED]: 'Reservada',
+					[LockerStates.RENTED]: 'Alquilada',
+				},
+			},
+			{
+				field: 'createdAt',
+				title: 'Fecha de Creación',
+				type: 'date',
+				editable: 'never',
+			},
+			{
+				field: 'updatedAt',
+				title: 'Última modificación',
+				type: 'date',
+				editable: 'never',
+			},
+		],
+		title: 'Taquillas',
+	},
+};
 function pong(state = false, action = {}) {
 	switch (action.type) {
 	case 'PONG':
@@ -12,14 +95,23 @@ function pong(state = false, action = {}) {
 function loggedUser(state = {}, action = {}) {
 	switch (action.type) {
 	case 'MAKE_ADMIN':
-		return { isAdmin: !state.isAdmin, name: 'E. Peláez' };
+		return { ...state, isAdmin: !state.isAdmin };
 	default:
-		return { isAdmin: false, name: 'E. Peláez' };
+		return state;
 	}
 }
 
 function lockers(state = [], action = {}) {
 	switch (action.type) {
+	case 'UPDATE_LOCKER':
+		return state.map((locker) => (
+			locker.id === action.payload.locker.id ? action.payload.locker : locker));
+	case 'SET_LOCKER':
+		return [...state, action.payload.locker];
+	case 'SET_LOCKERS':
+		return action.payload.lockers;
+	case 'REMOVE_LOCKER':
+		return state.filter((locker) => locker.id !== action.payload.locker.id);
 	default:
 		return state;
 	}
@@ -89,35 +181,20 @@ function paymentMethods(state = [], action = {}) {
 		return state;
 	}
 }
-function info(state = [], action = {}) {
-	const models = {
-		locations: {
-			id: 'id',
-			columns: [
-				{
-					field: 'id',
-					title: 'ID',
-					editable: 'never',
-					width: 1,
-				},
-				{
-					field: 'name',
-					title: 'Nombre',
-					width: 200,
-				},
-				{
-					field: 'description',
-					title: 'Descripción',
-				},
-			],
-			title: 'Localizaciones',
-		},
-	};
+function info(state = models, action = {}) {
 	switch (action.type) {
+	case 'SET_LOCATIONS_LOOKUP': {
+		const newState = { ...state };
+		const data = action.payload.locations;
+		for (let i = data.length - 1; i >= 0; i--) {
+			newState.lockers.columns[1].lookup[data[i].id] = data[i].name;
+		}
+		return newState;
+	}
 	case 'DELETE_INFO':
 		return state;
 	default:
-		return models;
+		return state;
 	}
 }
 

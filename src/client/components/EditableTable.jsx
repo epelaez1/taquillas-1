@@ -8,9 +8,8 @@ export default function EditableTalbe(props) {
 		create, update, remove,
 	} = props;
 	const data = useSelector((state) => state[model]);
-	const columns = useSelector((state) => state.info[model].columns);
-	const title = useSelector((state) => state.info[model].title);
-
+	const info = useSelector((state) => state.info);
+	const { columns, title } = info[model];
 
 	return (
 		<MaterialTable
