@@ -1,88 +1,5 @@
 import { combineReducers } from 'redux';
-import { LockerStates } from '../../server/constants';
 
-const models = {
-	locations: {
-		id: 'id',
-		columns: [
-			{
-				field: 'id',
-				title: 'ID',
-				editable: 'never',
-				width: 100,
-			},
-			{
-				field: 'name',
-				title: 'Nombre',
-				width: 200,
-			},
-			{
-				field: 'description',
-				title: 'Descripción',
-				cellStyle: {
-					textOverflow: 'ellipsis',
-					whiteSpace: 'nowrap',
-					overflow: 'hidden',
-					maxWidth: 100,
-				},
-			},
-			{
-				field: 'createdAt',
-				title: 'Fecha de Creación',
-				type: 'date',
-				editable: 'never',
-			},
-			{
-				field: 'updatedAt',
-				title: 'Última modificación',
-				type: 'date',
-				editable: 'never',
-			},
-		],
-		title: 'Localizaciones',
-	},
-	lockers: {
-		id: 'id',
-		columns: [
-			{
-				field: 'lockerNumber',
-				title: 'Nº',
-				type: 'numeric',
-				width: 100,
-			},
-			{
-				field: 'locationId',
-				title: 'Localización',
-				width: 200,
-				lookup: {},
-			},
-			{
-				field: 'lockerStateId',
-				title: 'Estado',
-				width: 200,
-				lookup: {
-					[LockerStates.UNAVAILABLE]: 'No Disponible',
-					[LockerStates.AVAILABLE]: 'Disponible',
-					[LockerStates.RESERVED]: 'Reservada',
-					[LockerStates.RENTED]: 'Alquilada',
-				},
-			},
-			{
-				field: 'createdAt',
-				title: 'Fecha de Creación',
-				type: 'date',
-				editable: 'never',
-			},
-			{
-				field: 'updatedAt',
-				title: 'Última modificación',
-				type: 'date',
-				editable: 'never',
-			},
-		],
-		title: 'Taquillas',
-	},
-};
 function pong(state = false, action = {}) {
 	switch (action.type) {
 	case 'PONG':
@@ -176,23 +93,17 @@ function rentalStates(state = [], action = {}) {
 }
 
 function paymentMethods(state = [], action = {}) {
+	const { payload } = action;
 	switch (action.type) {
-	default:
-		return state;
-	}
-}
-function info(state = models, action = {}) {
-	switch (action.type) {
-	case 'SET_LOCATIONS_LOOKUP': {
-		const newState = { ...state };
-		const data = action.payload.locations;
-		for (let i = data.length - 1; i >= 0; i--) {
-			newState.lockers.columns[1].lookup[data[i].id] = data[i].name;
-		}
-		return newState;
-	}
-	case 'DELETE_INFO':
-		return state;
+	case 'UPDATE_PAYMENT_METHOD':
+		return state.map((paymentMethod) => (
+			paymentMethod.id === payload.paymentMethod.id ? payload.paymentMethod : paymentMethod));
+	case 'SET_PAYMENT_METHOD':
+		return [...state, payload.paymentMethod];
+	case 'SET_PAYMENT_METHODS':
+		return payload.paymentMethods;
+	case 'REMOVE_PAYMENT_METHOD':
+		return state.filter((paymentMethod) => paymentMethod.id !== payload.paymentMethod.id);
 	default:
 		return state;
 	}
@@ -210,7 +121,6 @@ const GlobalState = (combineReducers({
 	lockerStates,
 	rentalStates,
 	paymentMethods,
-	info,
 }));
 
 export default GlobalState;

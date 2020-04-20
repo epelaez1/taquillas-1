@@ -1,59 +1,38 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { getLockersScaffold, scaffolds } from '../utils/tableScaffolds';
 import {
-	fetchGet, fetchPost,
-	fetchDelete, fetchPut,
-} from '../util';
-import {
-	setLocker, setLockers,
+	getAllLockers, createLocker,
 	updateLocker, removeLocker,
-} from '../redux/actions/lockers';
-
-import { setLocationsLookup } from '../redux/actions/info';
+} from '../utils/api/lockers';
+import { getAllLocations } from '../utils/api/locations';
 import EditableTable from '../components/EditableTable';
 
 const Lockers = () => {
-	const dispatch = useDispatch();
-
-	const create = (newLocker) => fetchPost('/api/v1/admin/locker', newLocker)
-		.then((r) => r.json())
-		.then((locker) => dispatch(setLocker(locker)));
-
-	const update = (newLocker, oldLocker) => {
-		const url = `/api/v1/admin/locker/${oldLocker.id}`;
-		return fetchPut(url, newLocker)
-			.then((r) => r.json())
-			.then((locker) => {
-				console.log("'Pasa'");
-				return locker;
-			})
-			.then((locker) => dispatch(updateLocker(locker)));
-	};
-
-	const remove = (locker) => {
-		const url = `/api/v1/admin/locker/${locker.id}`;
-		return fetchDelete(url, {})
-			.then((r) => r.json())
-			.then(() => dispatch(removeLocker(locker)));
-	};
+	const [lockersScaffold, setLockersScaffold] = useState(scaffolds.lockers);
+	const locations = useSelector((state) => state.locations);
 
 	useEffect(() => {
-		fetchGet('/api/v1/admin/lockers')
-			.then((r) => r.json())
-			.then((lockers) => dispatch(setLockers(lockers)));
-	});
+		getAllLockers();
+	}, []);
+
 	useEffect(() => {
-		fetchGet('/api/v1/admin/locations')
-			.then((r) => r.json())
-			.then((locations) => dispatch(setLocationsLookup(locations)));
-	});
+		getAllLocations();
+	}, []);
+
+	useEffect(() => {
+		const lockerScafold = getLockersScaffold(locations);
+		setLockersScaffold(lockerScafold);
+	}, [locations]);
 
 	return (
 		<EditableTable
 			model="lockers"
-			create={create}
-			update={update}
-			remove={remove}
+			columns={lockersScaffold.columns}
+			title={lockersScaffold.title}
+			create={createLocker}
+			update={updateLocker}
+			remove={removeLocker}
 		/>
 
 	);

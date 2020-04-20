@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
-const models = require('../models');
-const { RentalStates } = require('../constants');
+const models = require('../../models');
+const { RentalStates } = require('../../constants');
 
 exports.model = models.Locker;
 exports.loadOptions = {

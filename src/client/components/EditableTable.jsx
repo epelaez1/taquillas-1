@@ -4,12 +4,10 @@ import MaterialTable from 'material-table';
 
 export default function EditableTalbe(props) {
 	const {
-		model,
+		model, title, columns,
 		create, update, remove,
 	} = props;
 	const data = useSelector((state) => state[model]);
-	const info = useSelector((state) => state.info);
-	const { columns, title } = info[model];
 
 	return (
 		<MaterialTable

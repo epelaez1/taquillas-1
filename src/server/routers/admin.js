@@ -1,8 +1,8 @@
 const express = require('express');
 const defaultController = require('../controllers/defaultController');
-const location = require('../controllers/location');
-const paymentMethod = require('../controllers/paymentMethod');
-const locker = require('../controllers/locker');
+const location = require('../controllers/admin/location');
+const paymentMethod = require('../controllers/admin/paymentMethod');
+const locker = require('../controllers/admin/locker');
 
 const router = express.Router();
 
