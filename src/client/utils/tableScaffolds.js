@@ -94,10 +94,70 @@ const location = {
 	lookup: {},
 };
 
+// Lockers
+const phone = {
+	field: 'phone',
+	title: 'Teléfono',
+};
+const dni = {
+	field: 'dni',
+	title: 'DNI',
+};
+const email = {
+	field: 'email',
+	title: 'E-Mail',
+};
+const isAdmin = {
+	field: 'isAdmin',
+	title: 'Administrador',
+	type: 'boolean',
+};
+
+// Rentals:
+const expirationDate = {
+	field: 'expirationDate',
+	title: 'Caducidad del alquiler',
+	type: 'datetime',
+	filtering: false,
+	cellStyle: {
+		textOverflow: 'ellipsis',
+		whiteSpace: 'nowrap',
+		overflow: 'hidden',
+		maxWidth: 100,
+	},
+};
+const deposit = {
+	field: 'deposit',
+	title: 'Fianza',
+	type: 'currency',
+};
+const rentalLocker = {
+	field: 'locker.lockerNumber',
+	title: 'Taquilla',
+	editable: 'never',
+};
+const rentalLockerLocation = {
+	field: 'locker.location.name',
+	title: 'Localización',
+	editable: 'never',
+};
+const rentalUser = {
+	field: 'user.email',
+	title: 'E-mail',
+	editable: 'never',
+};
+const rentalUserDNI = {
+	field: 'user.dni',
+	title: 'DNI',
+	editable: 'never',
+};
+
 const allColumns = {
 	locations: [id, name, description, createdAt, updatedAt],
 	paymentMethods: [id, name, description, createdAt, updatedAt],
 	lockers: [lockerNumber, location, lockerState, createdAt, updatedAt],
+	users: [name, phone, dni, email, isAdmin, createdAt, updatedAt],
+	rentals: [rentalUserDNI, rentalLocker, rentalLockerLocation, deposit, rentalState, rentalUser],
 };
 
 export const getLockersScaffold = (locations) => {
@@ -124,5 +184,15 @@ export const scaffolds = {
 		id: 'id',
 		title: 'Taquillas',
 		columns: allColumns.lockers,
+	},
+	users: {
+		id: 'id',
+		title: 'Usuarios',
+		columns: allColumns.users,
+	},
+	rentals: {
+		id: 'id',
+		title: 'Alquileres',
+		columns: allColumns.rentals,
 	},
 };
