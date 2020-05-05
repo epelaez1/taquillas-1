@@ -3,7 +3,7 @@ import GlobalState from './reducers';
 
 const initalState = {
 	pong: false,
-	loggedUser: { isAdmin: true, name: 'Usuario' },
+	loggedUser: { isAdmin: true, name: 'Usuario', userId: 1 },
 	lockers: [],
 	users: [],
 	rentals: [],

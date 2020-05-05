@@ -1,35 +1,60 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import MaterialTable from 'material-table';
-import { scaffolds } from '../utils/tableScaffolds';
-import List from '../components/List/List';
+import { scaffolds, getRentalsScaffold } from '../utils/tableScaffolds';
+import EditableTable from '../components/EditableTable';
+import { RentalStates } from '../../server/constants';
 import {
 	getAllRentals, createRental,
 	updateRental, removeRental,
 } from '../utils/api/rentals';
 
+import { getAllLockers } from '../utils/api/lockers';
+import { getAllUsers } from '../utils/api/users';
 
 const Rentals = () => {
-	const rentalsScaffold = scaffolds.rentals;
+	const [rentalsScaffold, setRentalsScaffold] = useState(scaffolds.rentals);
+	const users = useSelector((state) => state.users);
+	const lockers = useSelector((state) => state.lockers);
+	const activeRentals = useSelector((state) => state.rentals.filter(
+		(rental) => rental.rentalStateId === RentalStates.RENTED,
+	));
+	const allRentals = useSelector((state) => state.rentals);
 
 	useEffect(() => {
 		getAllRentals();
 	}, []);
-	const data = useSelector((state) => state.rentals);
+	useEffect(() => {
+		getAllUsers();
+	}, []);
+
+	useEffect(() => {
+		getAllLockers();
+	}, []);
+
+	useEffect(() => {
+		const rentalScafold = getRentalsScaffold(lockers, users);
+		setRentalsScaffold(rentalScafold);
+	}, [lockers, users]);
 
 	return (
 		<div>
-			<List title="Solicitudes Pendientes">
-				{data.map((rental) => <div>{rental.userId}</div>)}
-			</List>
-			<MaterialTable
-				title={rentalsScaffold.title}
+			<EditableTable
+				data={activeRentals}
+				title="Alquileres activos"
 				columns={rentalsScaffold.columns}
-				data={data}
-				options={{
-					filtering: true,
-					selection: true,
-				}}
+				actions={[]}
+			/>
+
+			<EditableTable
+				data={allRentals}
+				title="Todos los alquileres (Histórico)"
+				columns={rentalsScaffold.columns}
+				create={createRental}
+				update={updateRental}
+				remove={removeRental}
+				actions={[]}
+				editable
+				showEmpty
 			/>
 		</div>
 	);

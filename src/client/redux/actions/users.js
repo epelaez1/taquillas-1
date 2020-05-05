@@ -3,7 +3,6 @@ export function makeAdmin() {
 }
 
 export function setUser(user) {
-	console.log(user);
 	return { type: 'SET_USER', payload: { user } };
 }
 

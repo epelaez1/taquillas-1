@@ -9,6 +9,7 @@ import Payments from '../views/Payments';
 import Lockers from '../views/Lockers';
 import Users from '../views/Users';
 import Rentals from '../views/Rentals';
+import Requests from '../views/Requests';
 import ErrorView from '../views/ErrorView';
 import Layout from '../components/Layout';
 import SignIn from '../components/SignIn';
@@ -54,6 +55,7 @@ export default class ReduxProvider extends React.Component {
 								<Route exact path="/admin/lockers" component={Lockers} />
 								<Route exact path="/admin/users" component={Users} />
 								<Route exact path="/admin/rentals" component={Rentals} />
+								<Route exact path="/admin/requests" component={Requests} />
 								<Route path="/500" render={(props) => <ErrorView {...props} code={500} />} />
 								<Route render={(props) => <ErrorView {...props} code={404} />} />
 							</Switch>

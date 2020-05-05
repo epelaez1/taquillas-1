@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { scaffolds } from '../utils/tableScaffolds';
-import List from '../components/List/List';
 import {
 	getAllUsers, createUser,
 	updateUser, removeUser,
@@ -9,29 +8,39 @@ import {
 
 import EditableTable from '../components/EditableTable';
 
-const Payments = () => {
+const Users = () => {
 	const usersScaffold = scaffolds.users;
-	const data = useSelector((state) => state.users);
-
+	const admins = useSelector((state) => state.users.filter((user) => user.isAdmin));
+	const allUsers = useSelector((state) => state.users);
 	useEffect(() => {
 		getAllUsers();
 	}, []);
-
 	return (
 		<>
-			<List title="Usuarios administradores">
-				{data.map((user) => <div>{user.name}</div>)}
-			</List>
 			<EditableTable
-				model="users"
+				data={admins}
+				title="Administradores"
+				columns={usersScaffold.columns}
+				create={createUser}
+				update={updateUser}
+				remove={removeUser}
+				actions={[]}
+				editable
+			/>
+			<br />
+			<EditableTable
+				data={allUsers}
 				title={usersScaffold.title}
 				columns={usersScaffold.columns}
 				create={createUser}
 				update={updateUser}
 				remove={removeUser}
+				actions={[]}
+				editable
+
 			/>
 		</>
 	);
 };
 
-export default Payments;
+export default Users;

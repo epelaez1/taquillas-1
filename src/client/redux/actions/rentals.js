@@ -1,5 +1,4 @@
 export function setRental(rental) {
-	console.log(rental);
 	return { type: 'SET_RENTAL', payload: { rental } };
 }
 export function setRentals(rentals) {

@@ -45,7 +45,7 @@ router.param(
 // Routes for the model locker
 router.get(
 	'/lockers',
-	locker.setDefaults, defaultController.index,
+	locker.index, defaultController.index,
 );
 router.get(
 	'/locker/:lockerId(\\d+)',
@@ -101,7 +101,7 @@ router.param(
 // Routes for the model user
 router.get(
 	'/users',
-	user.setDefaults, defaultController.index,
+	user.index, defaultController.index,
 );
 router.get(
 	'/user/:userId(\\d+)',
@@ -129,7 +129,7 @@ router.param(
 // Routes for the model payment
 router.get(
 	'/payments',
-	payment.setDefaults, defaultController.index,
+	payment.index, defaultController.index,
 );
 router.get(
 	'/payment/:paymentId(\\d+)',
@@ -150,14 +150,14 @@ router.delete(
 
 // Autoload for routes using :param
 router.param(
-	'paymentId',
+	'rentalId',
 	defaultController.load(rental.model, rental.loadOptions),
 );
 
 // Routes for the model rental
 router.get(
 	'/rentals',
-	rental.setDefaults, defaultController.index,
+	rental.index, defaultController.index,
 );
 router.get(
 	'/rental/:rentalId(\\d+)',
@@ -172,7 +172,7 @@ router.put(
 	rental.update, defaultController.update,
 );
 router.delete(
-	'/rental/:paymentId(\\d+)',
+	'/rental/:rentalId(\\d+)',
 	defaultController.destroy,
 );
 

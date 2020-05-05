@@ -26,7 +26,6 @@ export const updateLocation = (newLocation, oldLocation) => {
 	return fetchPut(url, newLocation)
 		.then((r) => r.json())
 		.then((location) => {
-			console.log("'Pasa'");
 			return location;
 		})
 		.then((location) => dispatch(updateLocationAction(location)));

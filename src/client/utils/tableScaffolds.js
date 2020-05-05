@@ -63,9 +63,10 @@ const lockerState = {
 	},
 };
 const rentalState = {
-	field: 'lockerStateId',
+	field: 'rentalStateId',
 	title: 'Estado',
 	width: 200,
+	editable: 'never',
 	lookup: {
 		[RentalStates.REQUESTED]: 'Solicitud enviada',
 		[RentalStates.RESERVED]: 'Taquilla reservada',
@@ -111,12 +112,13 @@ const isAdmin = {
 	field: 'isAdmin',
 	title: 'Administrador',
 	type: 'boolean',
+	editable: 'onUpdate',
 };
 
 // Rentals:
 const expirationDate = {
 	field: 'expirationDate',
-	title: 'Caducidad del alquiler',
+	title: 'Caducidad',
 	type: 'datetime',
 	filtering: false,
 	cellStyle: {
@@ -131,25 +133,27 @@ const deposit = {
 	title: 'Fianza',
 	type: 'currency',
 };
-const rentalLocker = {
-	field: 'locker.lockerNumber',
-	title: 'Taquilla',
-	editable: 'never',
-};
-const rentalLockerLocation = {
-	field: 'locker.location.name',
+
+const lockerLocation = {
+	field: 'Locker.Location.name',
 	title: 'Localización',
 	editable: 'never',
 };
-const rentalUser = {
-	field: 'user.email',
-	title: 'E-mail',
-	editable: 'never',
-};
-const rentalUserDNI = {
-	field: 'user.dni',
+
+const userDNI = {
+	field: 'User.dni',
 	title: 'DNI',
 	editable: 'never',
+};
+const lockerId = {
+	field: 'lockerId',
+	title: 'Taquilla',
+	lookup: {},
+};
+const userId = {
+	field: 'userId',
+	title: 'E-Mail',
+	lookup: {},
 };
 
 const allColumns = {
@@ -157,7 +161,7 @@ const allColumns = {
 	paymentMethods: [id, name, description, createdAt, updatedAt],
 	lockers: [lockerNumber, location, lockerState, createdAt, updatedAt],
 	users: [name, phone, dni, email, isAdmin, createdAt, updatedAt],
-	rentals: [rentalUserDNI, rentalLocker, rentalLockerLocation, deposit, rentalState, rentalUser],
+	rentals: [userId, lockerId, deposit, rentalState, expirationDate, userDNI, lockerLocation],
 };
 
 export const getLockersScaffold = (locations) => {
@@ -167,6 +171,30 @@ export const getLockersScaffold = (locations) => {
 	}
 	const columns = [lockerNumber, { ...location, lookup }, lockerState, createdAt, updatedAt];
 	return { id: 'id', title: 'Taquillas', columns };
+};
+
+export const getRentalsScaffold = (lockers, users) => {
+	const lockersLookup = {};
+	for (let i = 0; i < lockers.length; i++) {
+		if (lockers[i].lockerStateId === LockerStates.AVAILABLE) {
+			lockersLookup[lockers[i].id] = lockers[i].lockerNumber;
+		}
+	}
+
+	const usersLookup = {};
+	for (let i = 0; i < users.length; i++) {
+		usersLookup[users[i].id] = users[i].email;
+	}
+	const columns = [
+		{ ...userId, lookup: usersLookup },
+		{ ...lockerId, lookup: lockersLookup },
+		deposit,
+		rentalState,
+		expirationDate,
+		userDNI,
+		lockerLocation,
+	];
+	return { id: 'id', title: 'Alquileres', columns };
 };
 
 export const scaffolds = {

@@ -9,6 +9,7 @@ import {
 	removeRental as removeRentalAction,
 } from '../../redux/actions/rentals';
 
+import RentalStates from '../../../server/constants';
 import store from '../../redux/store';
 
 const { dispatch } = store;
@@ -33,4 +34,32 @@ export const removeRental = (rental) => {
 	return fetchDelete(url, {})
 		.then((r) => r.json())
 		.then(() => dispatch(removeRentalAction(rental)));
+};
+
+export const acceptRequest = (rental) => {
+	const url = `/api/v1/admin/rental/${rental.id}?action=setReserved`;
+	return fetchGet(url, {})
+		.then((r) => r.json())
+		.then((updatedRental) => dispatch(updateRentalAction(updatedRental)));
+};
+
+export const rentLocker = (rental, payment) => {
+	const url = `/api/v1/admin/rental/${rental.id}?action=rent`;
+	return fetchPut(url, payment)
+		.then((r) => r.json())
+		.then((updatedRental) => dispatch(updateRentalAction(updatedRental)));
+};
+
+export const renewRental = (rental) => {
+	const url = `/api/v1/admin/rental/${rental.id}?action=renew`;
+	return fetchGet(url)
+		.then((r) => r.json())
+		.then((updatedRental) => dispatch(updateRentalAction(updatedRental)));
+};
+
+export const acceptRenew = (oldRental) => {
+	const url = `/api/v1/admin/rental/${oldRental.id}`;
+	return fetchPut(url, { rentalStateId: RentalStates.RESERVED })
+		.then((r) => r.json())
+		.then((rental) => dispatch(updateRentalAction(rental)));
 };
