@@ -37,6 +37,7 @@ const Users = () => {
 				remove={removeUser}
 				actions={[]}
 				editable
+				showEmpty
 
 			/>
 		</>
