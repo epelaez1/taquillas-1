@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import MaterialTable from 'material-table';
 
-export default function EditableTalbe(props) {
+const EditableTable = (props) => {
 	const {
 		data, title, columns, actions,
 		create, update, remove, editable,
-		showEmpty,
+		showEmpty, detailPanel,
 	} = props;
 	const [filterActivated, setFilterActivated] = useState(false);
 	let triggers = {};
@@ -26,7 +26,6 @@ export default function EditableTalbe(props) {
 			</div>
 		);
 	}
-	const actions_parsed = [...actions, {}];
 	return (
 		<MaterialTable
 			title={title}
@@ -37,6 +36,7 @@ export default function EditableTalbe(props) {
 				filtering: filterActivated,
 				selection: true,
 			}}
+			detailPanel={detailPanel}
 			actions={[
 				...actions,
 				{
@@ -48,4 +48,6 @@ export default function EditableTalbe(props) {
 			]}
 		/>
 	);
-}
+};
+
+export default EditableTable;

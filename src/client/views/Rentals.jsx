@@ -6,6 +6,7 @@ import { RentalStates } from '../../server/constants';
 import {
 	getAllRentals, createRental,
 	updateRental, removeRental,
+	claimRental, endRental,
 } from '../utils/api/rentals';
 
 import { getAllLockers } from '../utils/api/lockers';
@@ -15,11 +16,13 @@ const Rentals = () => {
 	const [rentalsScaffold, setRentalsScaffold] = useState(scaffolds.rentals);
 	const users = useSelector((state) => state.users);
 	const lockers = useSelector((state) => state.lockers);
+	const allRentals = useSelector((state) => state.rentals);
 	const activeRentals = useSelector((state) => state.rentals.filter(
 		(rental) => rental.rentalStateId === RentalStates.RENTED,
 	));
-	const allRentals = useSelector((state) => state.rentals);
-
+	const claimedRentals = useSelector((state) => state.rentals.filter(
+		(rental) => rental.rentalStateId === RentalStates.CLAIMED,
+	));
 	useEffect(() => {
 		getAllRentals();
 	}, []);
@@ -32,8 +35,7 @@ const Rentals = () => {
 	}, []);
 
 	useEffect(() => {
-		const rentalScafold = getRentalsScaffold(lockers, users);
-		setRentalsScaffold(rentalScafold);
+		setRentalsScaffold(getRentalsScaffold(lockers, users));
 	}, [lockers, users]);
 
 	return (
@@ -42,9 +44,26 @@ const Rentals = () => {
 				data={activeRentals}
 				title="Alquileres activos"
 				columns={rentalsScaffold.columns}
-				actions={[]}
+				actions={[{
+					icon: 'event_bussy',
+					tooltip: 'Reclamar fin de alquiler',
+					onClick: (event, rental) => claimRental(rental),
+					position: 'row',
+				}]}
 			/>
-
+			<br />
+			<EditableTable
+				data={claimedRentals}
+				title="Pendientes de devolución de llaves"
+				columns={rentalsScaffold.columns}
+				actions={[{
+					icon: 'vpn_key',
+					tooltip: 'Finalizar alquiler',
+					onClick: (event, rental) => endRental(rental),
+					position: 'row',
+				}]}
+			/>
+			<br />
 			<EditableTable
 				data={allRentals}
 				title="Todos los alquileres (Histórico)"

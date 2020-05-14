@@ -1,6 +1,7 @@
 import React from 'react';
+import { createMuiTheme, ThemeProvider, makeStyles } from '@material-ui/core/styles';
+import { useLocation } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { makeStyles } from '@material-ui/core/styles';
 import NavBar from './NavBar';
 import LeftMenu from './LeftMenu';
 
@@ -41,32 +42,44 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function ResponsiveDrawer(props) {
+function Layout(props) {
 	const { footer, children } = props;
 	const classes = useStyles();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
-
+	const location = useLocation();
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
 	};
+	const theme = createMuiTheme({
+		palette: {
+			primary: {
+				main: '#23395B',
+			},
+			secondary: {
+				main: '#FB8B24',
+			},
+		},
 
+	});
 
 	return (
-		<div className={classes.root} style={{ height: '100%' }}>
-			<CssBaseline />
-			<NavBar classes={classes} handleDrawerToggle={handleDrawerToggle} />
-			<LeftMenu
-				handleDrawerToggle={handleDrawerToggle}
-				mobileOpen={mobileOpen}
-				classes={classes}
-			/>
-			<main className={classes.content} id="main" style={{ overflow: 'auto' }}>
-				<div className={classes.toolbar} />
-				<div className="main_section">{children}</div>
-				{footer}
-			</main>
-		</div>
+		<ThemeProvider theme={theme}>
+			<div className={classes.root} style={{ height: '100%' }}>
+				<CssBaseline />
+				<NavBar classes={classes} handleDrawerToggle={handleDrawerToggle} />
+				<LeftMenu
+					handleDrawerToggle={handleDrawerToggle}
+					mobileOpen={mobileOpen}
+					classes={classes}
+				/>
+				<main className={classes.content} id="main" style={{ overflow: 'auto' }}>
+					<div className={classes.toolbar} />
+					<div className="main_section">{children}</div>
+					{footer}
+				</main>
+			</div>
+		</ThemeProvider>
 	);
 }
 
-export default ResponsiveDrawer;
+export default Layout;

@@ -25,9 +25,7 @@ export const updateLocation = (newLocation, oldLocation) => {
 	const url = `/api/v1/admin/location/${oldLocation.id}`;
 	return fetchPut(url, newLocation)
 		.then((r) => r.json())
-		.then((location) => {
-			return location;
-		})
+		.then((location) => location)
 		.then((location) => dispatch(updateLocationAction(location)));
 };
 

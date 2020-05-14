@@ -9,7 +9,6 @@ const initalState = {
 	rentals: [],
 	locations: [],
 	payments: [],
-	payment: [],
 	lockerStates: [],
 	rentalStates: [],
 	paymentMethods: [],

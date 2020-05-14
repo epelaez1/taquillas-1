@@ -38,7 +38,7 @@ exports.index = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-	req.allowedFields = ['name', 'phone', 'dni', 'isAdmin'];
+	req.allowedFields = ['name', 'phone', 'dni', 'isAdmin', 'email'];
 	next();
 };
 

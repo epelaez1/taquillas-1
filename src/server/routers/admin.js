@@ -163,6 +163,7 @@ router.get(
 	'/rental/:rentalId(\\d+)',
 	defaultController.show,
 );
+
 router.post(
 	'/rental',
 	rental.create, defaultController.create,

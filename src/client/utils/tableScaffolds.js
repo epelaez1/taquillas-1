@@ -55,6 +55,7 @@ const lockerState = {
 	field: 'lockerStateId',
 	title: 'Estado',
 	width: 200,
+	type: 'numeric',
 	lookup: {
 		[LockerStates.UNAVAILABLE]: 'No Disponible',
 		[LockerStates.AVAILABLE]: 'Disponible',
@@ -66,7 +67,8 @@ const rentalState = {
 	field: 'rentalStateId',
 	title: 'Estado',
 	width: 200,
-	editable: 'never',
+	editable: 'onUpdate',
+	type: 'numeric',
 	lookup: {
 		[RentalStates.REQUESTED]: 'Solicitud enviada',
 		[RentalStates.RESERVED]: 'Taquilla reservada',
@@ -77,9 +79,6 @@ const rentalState = {
 
 	},
 };
-
-// Rentals
-const paymentMethod = {};
 
 // Lockers
 const lockerNumber = {
@@ -156,12 +155,34 @@ const userId = {
 	lookup: {},
 };
 
+// Payments
+const rentalId = {
+	field: 'rentalId',
+	title: 'Rental Id',
+};
+
+const quantity = {
+	field: 'quantity',
+	title: 'Cantidad',
+	type: 'currency',
+};
+
+const paymentMethod = {
+	field: 'PaymentMethod.name',
+	title: 'Método de pago',
+};
+
+const userEmail = {
+	field: 'User.email',
+	title: 'E-Mail',
+};
 const allColumns = {
 	locations: [id, name, description, createdAt, updatedAt],
 	paymentMethods: [id, name, description, createdAt, updatedAt],
 	lockers: [lockerNumber, location, lockerState, createdAt, updatedAt],
 	users: [name, phone, dni, email, isAdmin, createdAt, updatedAt],
 	rentals: [userId, lockerId, deposit, rentalState, expirationDate, userDNI, lockerLocation],
+	payments: [userDNI, userEmail, rentalId, quantity, paymentMethod],
 };
 
 export const getLockersScaffold = (locations) => {
@@ -176,9 +197,7 @@ export const getLockersScaffold = (locations) => {
 export const getRentalsScaffold = (lockers, users) => {
 	const lockersLookup = {};
 	for (let i = 0; i < lockers.length; i++) {
-		if (lockers[i].lockerStateId === LockerStates.AVAILABLE) {
-			lockersLookup[lockers[i].id] = lockers[i].lockerNumber;
-		}
+		lockersLookup[lockers[i].id] = lockers[i].lockerNumber;
 	}
 
 	const usersLookup = {};
@@ -222,5 +241,10 @@ export const scaffolds = {
 		id: 'id',
 		title: 'Alquileres',
 		columns: allColumns.rentals,
+	},
+	payments: {
+		id: 'id',
+		title: 'Histórico de pagos',
+		columns: allColumns.payments,
 	},
 };
