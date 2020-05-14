@@ -1,6 +1,5 @@
 import React from 'react';
 import { createMuiTheme, ThemeProvider, makeStyles } from '@material-ui/core/styles';
-import { useLocation } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import NavBar from './NavBar';
 import LeftMenu from './LeftMenu';
@@ -46,7 +45,7 @@ function Layout(props) {
 	const { footer, children } = props;
 	const classes = useStyles();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
-	const location = useLocation();
+
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
 	};
