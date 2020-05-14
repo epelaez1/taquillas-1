@@ -12,7 +12,7 @@ const config = require('./config/server.json')[env];
 const { globalErrorHandler } = require('./errors');
 
 const app = express();
-
+console.log(process.env);
 // Produce logs via morgan's middleware.
 app.use(morgan('common'));
 // Middleware for reading form-encoded POST payloads.
