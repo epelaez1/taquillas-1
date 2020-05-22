@@ -19,7 +19,6 @@ function NavBar(props) {
 	useEffect(() => {
 		getSession();
 	}, []);
-	console.log(location);
 	const userData = () => {
 		if (loggedUser.user) {
 			return (

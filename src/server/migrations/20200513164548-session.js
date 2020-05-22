@@ -1,6 +1,6 @@
 
 module.exports = {
-	up: (queryInterface, Sequelize) => queryInterface.createTable('sessions',
+	up: (queryInterface, Sequelize) => queryInterface.createTable('Sessions',
 		{
 			sid: {
 				type: Sequelize.STRING,
@@ -27,5 +27,5 @@ module.exports = {
 			sync: { force: true },
 		}),
 
-	down: (queryInterface) => queryInterface.dropTable('sessions'),
+	down: (queryInterface) => queryInterface.dropTable('Sessions'),
 };

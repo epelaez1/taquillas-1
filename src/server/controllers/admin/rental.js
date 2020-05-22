@@ -40,20 +40,10 @@ exports.index = (req, res, next) => {
 
 exports.update = (req, res, next) => {
 	req.allowedFields = ['expirationDate', 'deposit', 'userId', 'lockerId', 'rentalStateId'];
-	if (Object.prototype.hasOwnProperty.call(req.body, 'rentalStateId')) {
-		req.body.rentalStateId = parseInt(req.body.rentalStateId, 10);
-	}
-	if (Object.prototype.hasOwnProperty.call(req.body, 'lockerId')) {
-		req.body.lockerId = parseInt(req.body.lockerId, 10);
-	}
-	if (Object.prototype.hasOwnProperty.call(req.body, 'userId')) {
-		req.body.userId = parseInt(req.body.userId, 10);
-	}
 	next();
 };
 
 exports.create = (req, res, next) => {
-	console.log(req.body);
 	req.entity = models.Rental.build(
 		{
 			expirationDate: req.body.expirationDate ? req.body.expirationDate : Date.now(),

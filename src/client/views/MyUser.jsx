@@ -13,7 +13,7 @@ const MyUser = () => {
 	}, []);
 	return (
 		<EditableTable
-			data={[loggedUser]}
+			data={[loggedUser.user]}
 			columns={usersScaffold.columns}
 			title={usersScaffold.title}
 			create={() => {}}

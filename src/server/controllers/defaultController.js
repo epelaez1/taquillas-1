@@ -40,10 +40,9 @@ exports.update = (req, res, next) => {
 	if (!fields) {
 		throw new BadRequestError();
 	}
-
+	console.log(entity);
 	entity.save({ fields })
 		.then((newEntity) => {
-			console.log(newEntity);
 			res.json(newEntity);
 		})
 		.catch((error) => next(error));

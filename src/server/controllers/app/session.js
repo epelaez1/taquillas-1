@@ -11,6 +11,7 @@ const login = (req, res) => {
 	// Compose the backend URL that should handle the redirect after
 	// a successful login (/login?redirect={window.location.href}).
 	const callbackUrl = new URL(`${config.url}/api/v1/app/session/new`);
+	req.query.redirect = req.query.redirect || '/';
 	callbackUrl.searchParams.set('redirect', req.query.redirect);
 
 	// Insert the callback URL as the service.
@@ -22,6 +23,7 @@ const login = (req, res) => {
 
 const loginMock = (req, res, next) => {
 	const options = {
+		raw: true,
 		limit: 1,
 		order: [['createdAt', 'ASC']],
 	};
@@ -83,7 +85,6 @@ exports.casLogin = (req, res, next) => {
 						[req.session.surname] = attributes.sn;
 					}
 				});
-
 				// Take the user back to wherever they were before the login.
 				return next();
 			});
@@ -94,12 +95,13 @@ exports.casLogin = (req, res, next) => {
 exports.create = (req, res, next) => {
 	const options = {
 		where: { email: req.session.email },
+		raw: true,
 	};
 
 	models.User.findOne(options)
 		.then((user) => {
 			if (!user) {
-				return res.redirect('/user/new');
+				return res.redirect('/register');
 			}
 			req.session.user = user;
 			return res.redirect(req.query.redirect);
@@ -108,13 +110,13 @@ exports.create = (req, res, next) => {
 };
 
 exports.index = (req, res) => {
-	const currentSession = req.session ? req.session : {};
+	const currentSession = req.session || {};
 	res.json(currentSession);
 };
 
 exports.destroy = (req, res) => {
 	delete req.session.user;
-	res.json({}); // redirect to login gage
+	res.json({});
 };
 
 // Auth middlewares

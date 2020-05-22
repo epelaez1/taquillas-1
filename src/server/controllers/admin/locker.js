@@ -38,10 +38,8 @@ exports.index = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-	req.allowedFields = ['lockerNumber', 'lockerStateId', 'locaitonId'];
-	if (Object.prototype.hasOwnProperty.call(req.body, 'lockerStateId')) {
-		req.body.lockerStateId = parseInt(req.body.lockerStateId, 10);
-	}
+	req.allowedFields = ['lockerNumber', 'lockerStateId', 'locationId'];
+
 	next();
 };
 
