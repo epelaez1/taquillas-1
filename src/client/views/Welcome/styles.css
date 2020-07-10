@@ -1,0 +1,41 @@
+.welcomeSection {
+	display: flex;
+	flex-direction: row;
+	height: 80%;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+.logo{
+	height: fit-content;
+    width: 500px;
+    display: inline-block;
+    font-size: 63px;
+    vertical-align: top;
+    font-style: italic;
+    text-align: center;
+}
+.logo img {
+	height: 112px;
+    vertical-align: middle;
+}
+.loginButton {
+	padding: 20px;
+	font-family: 'Mukta Malar';
+	font-weight: 700;
+	border-radius: 3px;
+	color: white;
+	font-style: italic;
+	font-size: 2em;
+	background: -webkit--webkit-linear-gradient(65deg, rgb(246, 85, 85) 0%, rgb(245, 85, 86) 0%, rgb(252, 207, 49) 100%);
+	background: -webkit-linear-gradient(65deg, rgb(246, 85, 85) 0%, rgb(245, 85, 86) 0%, rgb(252, 207, 49) 100%);
+	transition: box-shadow 0.3s;
+    transition-property: box-shadow;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+}
+.loginButton:hover {
+	opacity: 0.9;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+}

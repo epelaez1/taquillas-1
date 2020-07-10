@@ -66,7 +66,7 @@ const MyLockers = () => {
 			<br />
 			<EditableTable
 				data={claimed}
-				title="Alquileres caaducados"
+				title="Alquileres caducados"
 				columns={rentalsScaffold.columns}
 				actions={[{
 					icon: 'autorenew',

@@ -37,7 +37,7 @@ app.use(session({
 	saveUninitialized: false,
 	cookie: {
 		// Make the cookies HTTPS-only if this is a production deployment.
-		secure: env === 'production',
+		secure: env === 'productionn',
 		// The cookie shouldn't be valid after 20 minutes of inactivity.
 		maxAge: 20 * 60 * 1000, // milliseconds
 	},

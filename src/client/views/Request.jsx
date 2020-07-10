@@ -10,7 +10,6 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { getAllLockers } from '../utils/api/lockers';
 import { getAllLocations } from '../utils/api/locations';
-import { getSession, logOut } from '../utils/api/session';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -24,17 +23,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Request = () => {
 	const classes = useStyles();
-	const [open, setOpen] = React.useState(false);
-	const [newRental, setNewRental] = React.useState({});
-	const [confirm, setConfirm] = React.useState(false);
+	const [open, setOpen] = useState(false);
+	const [newRental, setNewRental] = useState({});
+	const [confirm, setConfirm] = useState(false);
 	const locations = useSelector((state) => state.locations);
 	const lockers = useSelector((state) => state.lockers);
 	const loggedUser = useSelector((state) => state.loggedUser);
-	const [aux, setAux] = React.useState('');
+	const [aux, setAux] = useState('');
 
-	useEffect(() => {
-		getSession();
-	}, []);
 	useEffect(() => {
 		getAllLockers();
 	}, []);

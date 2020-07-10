@@ -28,13 +28,26 @@ const loginMock = (req, res, next) => {
 		order: [['createdAt', 'ASC']],
 	};
 	models.User.findAll(options)
-		.then((users) => users[0])
-		.then((user) => {
-			req.session.user = user;
-			req.session.email = user.email;
-			req.session.org = '09';
-			req.session.name = user.name;
-			res.redirect(req.query.redirect);
+		.then((users) => {
+			let user;
+			if (users[0]) {
+				[user] = users;
+				req.session.user = user;
+			}
+			const mockCAS = {
+				name: 'Wil',
+				surname: 'Wheaton',
+				email: 'admin@example.es',
+				org: '09',
+			};
+			req.session.name = mockCAS.name;
+			req.session.surname = mockCAS.surname;
+			req.session.email = mockCAS.email;
+			req.session.org = mockCAS.org;
+			if (!users[0]) {
+				return res.redirect('/signup');
+			}
+			return res.redirect(req.query.redirect);
 		})
 		.catch((error) => next(error));
 };
@@ -101,7 +114,7 @@ exports.create = (req, res, next) => {
 	models.User.findOne(options)
 		.then((user) => {
 			if (!user) {
-				return res.redirect('/register');
+				return res.redirect('/signup');
 			}
 			req.session.user = user;
 			return res.redirect(req.query.redirect);
@@ -115,8 +128,9 @@ exports.index = (req, res) => {
 };
 
 exports.destroy = (req, res) => {
-	delete req.session.user;
-	res.json({});
+	req.session.destroy();
+	const currentSession = req.session || {};
+	res.json(currentSession);
 };
 
 // Auth middlewares

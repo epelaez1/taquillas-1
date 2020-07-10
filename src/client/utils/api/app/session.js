@@ -1,8 +1,8 @@
-import { fetchGet, fetchDelete } from '../asyncRequests';
+import { fetchGet, fetchDelete } from '../../asyncRequests';
 
-import { setSession } from '../../redux/actions/session';
+import { setSession } from '../../../redux/actions/session';
 
-import store from '../../redux/store';
+import store from '../../../redux/store';
 
 const { dispatch } = store;
 

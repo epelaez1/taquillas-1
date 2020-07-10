@@ -1,16 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { scaffolds } from '../utils/tableScaffolds';
 import { updateUser } from '../utils/api/users';
-import { getSession, logOut } from '../utils/api/session';
 import EditableTable from '../components/EditableTable';
 
 const MyUser = () => {
 	const usersScaffold = scaffolds.users;
 	const loggedUser = useSelector((state) => state.loggedUser);
-	useEffect(() => {
-		getSession();
-	}, []);
 	return (
 		<EditableTable
 			data={[loggedUser.user]}

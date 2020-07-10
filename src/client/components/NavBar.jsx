@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
 import { useSelector } from 'react-redux';
-import { getSession, logOut } from '../utils/api/session';
+import { getSession, logOut } from '../utils/api/app/session';
 
 function NavBar(props) {
 	const {
@@ -15,7 +15,6 @@ function NavBar(props) {
 	} = props;
 	const loggedUser = useSelector((state) => state.loggedUser);
 	const location = useLocation();
-
 	useEffect(() => {
 		getSession();
 	}, []);

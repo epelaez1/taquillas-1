@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Layout(props) {
-	const { footer, children } = props;
+	const { children } = props;
 	const classes = useStyles();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -50,6 +50,22 @@ function Layout(props) {
 		setMobileOpen(!mobileOpen);
 	};
 	const theme = createMuiTheme({
+		overrides: {
+			MuiInput: {
+				underline: {
+					borderBottom: '0px solid',
+					'&&&&:hover': {
+						borderBottom: '0px solid',
+					},
+					'&&&&:before': {
+						borderBottom: '0px solid',
+					},
+					'&&&&:focus': {
+						borderBottom: '0px solid',
+					},
+				},
+			},
+		},
 		palette: {
 			primary: {
 				main: '#23395B',
@@ -74,7 +90,11 @@ function Layout(props) {
 				<main className={classes.content} id="main" style={{ overflow: 'auto' }}>
 					<div className={classes.toolbar} />
 					<div className="main_section">{children}</div>
-					{footer}
+					<div className="footer">
+						<span>
+							&copy; 2019-2020 &mdash; Delegación de Alumnos de Telecomunicación
+						</span>
+					</div>
 				</main>
 			</div>
 		</ThemeProvider>

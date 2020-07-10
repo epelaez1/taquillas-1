@@ -4,7 +4,9 @@ h1 {
 }
 html, body, #root {
 	font-family: 'Mukta Malar', sans-serif;
+	background-color: aliceblue;
 	height: 100%;
+	margin: 0px;
 }
 
 #main {
