@@ -1,25 +1,31 @@
 .welcomeSection {
 	display: flex;
+	flex: 1 1 0;
 	flex-direction: row;
 	height: 80%;
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
 }
-.logo{
+.welcomeSection > * {
+	flex: 1 1 0;
+}
+.welcomeLogo {
 	height: fit-content;
-    width: 500px;
+    margin-right: 50px;
     display: inline-block;
     font-size: 63px;
     vertical-align: top;
     font-style: italic;
-    text-align: center;
+    text-align: right;
 }
-.logo img {
+.welcomeLogo img {
 	height: 112px;
     vertical-align: middle;
 }
 .loginButton {
+	margin-left: 50px;
+	width: fit-content;
 	padding: 20px;
 	font-family: 'Mukta Malar';
 	font-weight: 700;

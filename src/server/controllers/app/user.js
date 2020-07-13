@@ -2,9 +2,12 @@ const models = require('../../models');
 const { BadRequestError } = require('../../errors');
 
 exports.create = (req, res, next) => {
+	// Not logged in the CAS
 	if (!req.session.email || !req.session.name) {
 		return next(new BadRequestError());
 	}
+	// User already registered
+	if (req.session.user) return next(new BadRequestError());
 	return models.User.create(
 		{
 			name: `${req.session.name} ${req.session.surname}`,

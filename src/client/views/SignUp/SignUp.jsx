@@ -2,18 +2,17 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import SignUpForm from '../../components/SignUpForm';
-import Logo from '../../public/images/logo.png';
+import Logo from '../../public/images/logo.svg';
 import './styles.css';
 
 const SignUp = () => {
-	const loggedUser = useSelector((state) => state.loggedUser);
+	const session = useSelector((state) => state.session);
 	const history = useHistory();
 	useEffect(() => {
-		if (!loggedUser.email) {
-			console.log(loggedUser);
+		if (!session.email) {
 			history.push('/');
 		}
-	}, [loggedUser]);
+	}, [session]);
 	const logo = (
 		<div className="logo">
 			<img src={Logo} alt="Taquillas" /> Taquillas

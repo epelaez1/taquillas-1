@@ -1,14 +1,15 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider, makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import NavBar from './NavBar';
-import LeftMenu from './LeftMenu';
+import Header from './Header/Header';
+import AdminNav from './AdminNav/AdminNav';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		display: 'flex',
+		flexDirection: 'column',
 	},
 	title: {
 		flexGrow: 1,
@@ -44,11 +45,8 @@ const useStyles = makeStyles((theme) => ({
 function Layout(props) {
 	const { children } = props;
 	const classes = useStyles();
-	const [mobileOpen, setMobileOpen] = React.useState(false);
+	const location = useLocation();
 
-	const handleDrawerToggle = () => {
-		setMobileOpen(!mobileOpen);
-	};
 	const theme = createMuiTheme({
 		overrides: {
 			MuiInput: {
@@ -80,16 +78,10 @@ function Layout(props) {
 	return (
 		<ThemeProvider theme={theme}>
 			<div className={classes.root} style={{ height: '100%' }}>
-				<CssBaseline />
-				<NavBar classes={classes} handleDrawerToggle={handleDrawerToggle} />
-				<LeftMenu
-					handleDrawerToggle={handleDrawerToggle}
-					mobileOpen={mobileOpen}
-					classes={classes}
-				/>
-				<main className={classes.content} id="main" style={{ overflow: 'auto' }}>
-					<div className={classes.toolbar} />
-					<div className="main_section">{children}</div>
+				<main className={classes.content} id="main">
+					<Header />
+					{location.pathname.includes('admin') ? (<AdminNav />) : null}
+					<div className="main_section" style={{ flexGrow: '1'}}>{children}</div>
 					<div className="footer">
 						<span>
 							&copy; 2019-2020 &mdash; Delegación de Alumnos de Telecomunicación

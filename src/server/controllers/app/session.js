@@ -29,9 +29,8 @@ const loginMock = (req, res, next) => {
 	};
 	models.User.findAll(options)
 		.then((users) => {
-			let user;
 			if (users[0]) {
-				[user] = users;
+				const [user] = users;
 				req.session.user = user;
 			}
 			const mockCAS = {

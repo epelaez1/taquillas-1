@@ -10,11 +10,11 @@ import { getAllUsers } from '../utils/api/users';
 const MyLockers = () => {
 	const [rentalsScaffold, setRentalsScaffold] = useState(scaffolds.rentals);
 	const users = useSelector((state) => state.users);
-	const loggedUser = useSelector((state) => state.loggedUser);
+	const session = useSelector((state) => state.session);
 	const lockers = useSelector((state) => state.lockers);
 	const requests = useSelector((state) => state.rentals.filter(
 		(rental) => (
-			rental.userId === loggedUser.id
+			rental.userId === session.id
 			&& rental.rentalStateId !== RentalStates.RENTED
 			&& rental.rentalStateId !== RentalStates.RETURNED
 			&& rental.rentalStateId !== RentalStates.CLAIMED
@@ -22,15 +22,15 @@ const MyLockers = () => {
 	));
 
 	const claimed = useSelector((state) => state.rentals.filter(
-		(rental) => rental.userId === loggedUser.id && rental.rentalStateId === RentalStates.CLAIMED,
+		(rental) => rental.userId === session.id && rental.rentalStateId === RentalStates.CLAIMED,
 	));
 
 	const activeRentals = useSelector((state) => state.rentals.filter(
-		(rental) => rental.rentalStateId === RentalStates.RENTED && rental.userId === loggedUser.id,
+		(rental) => rental.rentalStateId === RentalStates.RENTED && rental.userId === session.id,
 	));
 
 	const oldRentals = useSelector((state) => state.rentals.filter(
-		(rental) => rental.rentalStateId === RentalStates.RETURNED && rental.userId === loggedUser.id,
+		(rental) => rental.rentalStateId === RentalStates.RETURNED && rental.userId === session.id,
 	));
 
 	useEffect(() => {

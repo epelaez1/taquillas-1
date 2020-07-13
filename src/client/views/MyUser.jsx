@@ -6,10 +6,10 @@ import EditableTable from '../components/EditableTable';
 
 const MyUser = () => {
 	const usersScaffold = scaffolds.users;
-	const loggedUser = useSelector((state) => state.loggedUser);
+	const session = useSelector((state) => state.session);
 	return (
 		<EditableTable
-			data={[loggedUser.user]}
+			data={[session.user]}
 			columns={usersScaffold.columns}
 			title={usersScaffold.title}
 			create={() => {}}

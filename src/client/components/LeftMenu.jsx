@@ -31,7 +31,7 @@ function LeftMenu(props) {
 	} = props;
 	const theme = useTheme();
 	const location = useLocation();
-	const loggedUser = useSelector((state) => state.loggedUser);
+	const session = useSelector((state) => state.session);
 
 	const defaultMenuEntries = [
 		{
@@ -106,7 +106,7 @@ function LeftMenu(props) {
 	));
 
 	let menuEntries;
-	if (loggedUser.user && loggedUser.user.isAdmin) {
+	if (session.user && session.user.isAdmin) {
 		menuEntries = [links(defaultMenuEntries), <Divider key="divider" />, links(adminMenuEntries)];
 	} else {
 		menuEntries = [links(defaultMenuEntries), <Divider key="divider" />];

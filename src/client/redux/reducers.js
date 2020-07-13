@@ -9,7 +9,7 @@ function pong(state = false, action = {}) {
 	}
 }
 
-function loggedUser(state = {}, action = {}) {
+function session(state = {}, action = {}) {
 	switch (action.type) {
 	case 'UPDATE_USER':
 		return state.id === action.payload.user.id ? action.payload.user : state;
@@ -136,7 +136,7 @@ function paymentMethods(state = [], action = {}) {
 
 const GlobalState = (combineReducers({
 	pong,
-	loggedUser,
+	session,
 	lockers,
 	users,
 	rentals,

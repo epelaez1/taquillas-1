@@ -28,7 +28,7 @@ const Request = () => {
 	const [confirm, setConfirm] = useState(false);
 	const locations = useSelector((state) => state.locations);
 	const lockers = useSelector((state) => state.lockers);
-	const loggedUser = useSelector((state) => state.loggedUser);
+	const session = useSelector((state) => state.session);
 	const [aux, setAux] = useState('');
 
 	useEffect(() => {
@@ -47,7 +47,7 @@ const Request = () => {
 		setConfirm(true);
 		setNewRental({
 			lockerId,
-			userId: loggedUser.id,
+			userId: session.id,
 			deposit: 10,
 		});
 	};

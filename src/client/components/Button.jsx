@@ -3,7 +3,7 @@ import React from 'react';
 export default class ButtonExample extends React.PureComponent {
 	render() {
 		const {
-			extraClasses, value, action, text, tabIndex,
+			extraClasses, value, action, children, tabIndex,
 		} = this.props;
 
 		return (
@@ -19,7 +19,7 @@ export default class ButtonExample extends React.PureComponent {
 					action(parseInt(e.target.getAttribute('value'), 10));
 				}}
 			>
-				{text}
+				{children}
 			</div>
 		);
 	}

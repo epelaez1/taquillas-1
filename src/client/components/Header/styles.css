@@ -1,0 +1,31 @@
+header {
+	display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0px 2% 1% 2%;
+    align-items: stretch;
+    height: fit-content;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+.headerLogo {
+    font-size: 2.5em;
+    font-weight: 800;
+    font-style: italic;
+}
+
+.headerLogo img {
+    height: 90px;
+    vertical-align: middle;
+}
+
+.headerButtons {
+	display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    flex-grow: 1;
+}

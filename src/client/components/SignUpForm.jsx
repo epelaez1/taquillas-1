@@ -5,7 +5,7 @@ import { logOut } from '../utils/api/app/session';
 import createUser from '../utils/api/app/users';
 
 const SignUpForm = () => {
-	const loggedUser = useSelector((state) => state.loggedUser);
+	const session = useSelector((state) => state.session);
 	const [data, setData] = useState({
 		name: '',
 		phone: '',
@@ -17,10 +17,10 @@ const SignUpForm = () => {
 	useEffect(() => {
 		setData({
 			...data,
-			name: `${loggedUser.name} ${loggedUser.surname}` || '',
-			email: loggedUser.email || '',
+			name: `${session.name} ${session.surname}` || '',
+			email: session.email || '',
 		});
-	}, [loggedUser]);
+	}, [session]);
 
 	const handleInputChange = (event) => {
 		setData({
