@@ -10,6 +10,7 @@ import ErrorView from './ErrorView';
 import SignUp from './SignUp/SignUp';
 import Catalog from './Catalog/Catalog';
 import Profile from './Profile/Profile';
+import Users from './Users';
 import EndSession from '../components/EndSession';
 import Layout from '../components/Layout/Layout';
 import LogOut from './LogOut';
@@ -22,7 +23,7 @@ const AppRouter = () => {
 			<Route exact path="/admin/locations" component={TestView} />
 			<Route exact path="/admin/payments" component={TestView} />
 			<Route exact path="/admin/lockers" component={TestView} />
-			<Route exact path="/admin/users" component={TestView} />
+			<Route exact path="/admin/users" component={Users} />
 			<Route exact path="/admin/rentals" component={TestView} />
 			<Route exact path="/admin/requests" component={TestView} />
 		</Fragment>
